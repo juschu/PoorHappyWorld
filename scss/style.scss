@@ -85,6 +85,7 @@ h2{
 div#earth-container{
     height: 100%;
     width: 100%;
+    display: none;
     // background-image: url(../img/earth.jpg);
     // background-size: contain;
     // background-position: 50%;
@@ -93,6 +94,9 @@ div#earth-container{
     canvas{
 
     }
+}
+body > canvas {
+    border: 1px solid black;
 }
 section{
     display: none;

@@ -9,16 +9,46 @@ class Earth{
         this.oceanMesh = null;
         this.pos = new THREE.Vector3(0, 0, 0);
 
-        this.csgMesh = new THREE.Mesh(new THREE.SphereGeometry(this.radius, 50, 50));
-        // let geometry = new THREE.SphereGeometry(this.radius*0.999, 32, 32);
-        let geometry = new THREE.SphereGeometry(this.radius*0.999, 50, 50);
-        let material = new THREE.MeshLambertMaterial({
-            color: 0x2E6AEE,
-            wireframe: true,
-        });
-        this.oceanMesh = new THREE.Mesh(geometry, material);
+        // this.resFactor = 8;
+        this.resFactor = 1;
+        this.borderCanvas = document.createElement("canvas");
+        this.borderCanvas.setAttribute("height", 180*this.resFactor);
+        this.borderCanvas.setAttribute("width", 360*this.resFactor);
+        this.borderCtx = this.borderCanvas.getContext("2d");
+        this.fillCanvas = document.createElement("canvas");
+        this.fillCanvas.setAttribute("height", 180*this.resFactor);
+        this.fillCanvas.setAttribute("width", 360*this.resFactor);
+        this.fillCtx = this.fillCanvas.getContext("2d");
+        document.getElementsByTagName("body")[0].appendChild(this.borderCanvas);
+        this.borderCtx.lineWidth = 1*this.resFactor;
+        this.borderCtx.strokeStyle = "#000";
+        this.borderCtx.clearRect(0, 0, 360*this.resFactor, 180*this.resFactor);
+        this.borderCtx.fillStyle = "#FFF";
+        this.borderCtx.beginPath();
+        this.borderCtx.moveTo(this.mapLon2X(-40), this.mapLat2Y(40));
+        this.borderCtx.lineTo(this.mapLon2X(40), this.mapLat2Y(40));
+        this.borderCtx.lineTo(this.mapLon2X(40), this.mapLat2Y(-40));
+        this.borderCtx.lineTo(this.mapLon2X(-40), this.mapLat2Y(-40));
+        this.borderCtx.lineTo(this.mapLon2X(-40), this.mapLat2Y(40));
+        this.borderCtx.stroke();
+
+        this.oceanMesh = new THREE.Mesh(
+            new THREE.SphereGeometry(this.radius*0.999, 50, 50),
+            new THREE.MeshLambertMaterial({
+                color: 0x2E6AEE,
+                wireframe: true,
+            })
+        );
         this.oceanMesh.position.set(this.pos.x, this.pos.y, this.pos.z);
         this.scene.add(this.oceanMesh);
+    }
+
+    mapLon2X(lon){
+        return (lon+180)*this.resFactor;
+    }
+
+    mapLat2Y(lat){
+        return (-1*lat+90)*this.resFactor;
     }
 
     getCountryByCode(code){

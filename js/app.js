@@ -51,22 +51,22 @@ class App{
         // https://github.com/mapbox/earcut
         // https://github.com/Wilt/three.js_triangulation
         THREE.Triangulation.setLibrary(THREE.Triangulation.libraries.earcut);
-        // $.ajax(window.location+"img/earth.svg", {
-        $.ajax(window.location+"img/generic.svg", {
-            success: function(svg){
-                var paths = svg.querySelectorAll(".country");
-                for (let i = 0; i<paths.length; i++) {
-                    // console.log("path #"+i);
-                    paths[i].classList.remove("country");
-                    app.earth.addPath(
-                        paths[i].getAttribute("class"),
-                        paths[i].getElementsByTagName("path")[0].getAttribute("d")
-                    );
-                }
-                app.earth.transform();
-                console.log("fertig");
-            },
-        });
+        // // $.ajax(window.location+"img/earth.svg", {
+        // $.ajax(window.location+"img/generic.svg", {
+        //     success: function(svg){
+        //         var paths = svg.querySelectorAll(".country");
+        //         for (let i = 0; i<paths.length; i++) {
+        //             // console.log("path #"+i);
+        //             paths[i].classList.remove("country");
+        //             app.earth.addPath(
+        //                 paths[i].getAttribute("class"),
+        //                 paths[i].getElementsByTagName("path")[0].getAttribute("d")
+        //             );
+        //         }
+        //         app.earth.transform();
+        //         console.log("fertig");
+        //     },
+        // });
 
 
         // let box = new THREE.BoxGeometry(300, 300, 300);
