@@ -23,7 +23,7 @@ class App{
         this.earthScene = new THREE.Scene();
         this.earth = new Earth(200, this.earthScene);
         this.earthCamera = new OrbitCamera(
-            600,
+            400,
             75,
             this.earthContainer.getBoundingClientRect().width / this.earthContainer.getBoundingClientRect().height,
             this.earth.pos

@@ -1,10 +1,22 @@
-$color1: rgb(150, 150, 150);
+$color1: rgb(134, 134, 134);
+$color2: rgb(178, 178, 178);
+
 $background: rgba(255, 255, 255, 0.85);
 $dark: #363636;
 $light: white;
 
 
 /*******************MAIN_STUFF*******************/
+
+::-moz-selection {
+    background: #c6c6c6;
+    color: #fff;
+}
+
+::selection {
+    background: #c6c6c6;
+    color: #fff;
+}
 
 html, body{
     margin: 0;
@@ -53,10 +65,10 @@ h2{
     transition: all .3s;
 }
 
-.button p {
+.button p, select {
     color: $light;
     margin: auto 3px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .button:hover {
@@ -135,7 +147,7 @@ section{
 
 .info-box {
     width: 100%;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .info-text {
@@ -152,15 +164,21 @@ section{
     margin: 0;
 }
 
+.info-data-2 {
+    color: $color2;
+    margin: 0;
+}
+
 .info-rank {
-    font-size: 30px;
+    font-size: 3.5em;
     margin: auto 5px;
-    color: $color1;
+    color: $color2;
     text-transform: lowercase;
 }
 
 .info-bar-compare {
     position: relative;
+    height: 40px;
 }
 
 .info-bar-box {
@@ -169,6 +187,7 @@ section{
     flex-direction: row;
     justify-content: space-between;
     height: 30px;
+    z-index: 20;
 }
 
 .info-bar-ico {
@@ -202,9 +221,8 @@ section{
 
 
 .info-bar {
-    height: 15px;
-    width: 15px;
-    border: 2px solid #646464;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     background: transparent;
     margin: auto 2px;
@@ -212,11 +230,15 @@ section{
 
 .info-bar.active {
     background: $dark;
-    border: 2px solid $dark;
 }
 
-.info-bar-box.second.active {
-    background: grey;
+.second {
+    top: 10px;
+    z-index: 10;
+    opacity: .4;
+}
+
+.second .active {
 }
 
 .button-ico {
@@ -257,7 +279,7 @@ section{
     height: 150px;
     width: 90%;
     padding: 5%;
-    background-image: url(../ico/france.png);
+    background-image: url(../img/germany.svg);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -266,7 +288,7 @@ section{
 #return {
     position: absolute;
     top: 40%;
-    left: 180px;
+    left: 160px;
     height: 40px;
     width: 40px;
     margin: 0 auto;
@@ -371,4 +393,201 @@ input[type="radio"] {
 	top: 5px;
 	transition: left .2s ease;
 	z-index: 1;
+}
+
+
+/*************************QUESTIONS***********************/
+
+#questions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    top: -150%;
+}
+
+#question-close {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.89);
+    z-index: 80;
+    top: -150%;
+}
+
+#wrapper {
+    position: absolute;
+    top: -150%;
+    background: #363636;
+    width: 500px;
+    max-width: 500px;
+    margin-left: -250px;
+    height: 100%;
+    color: white;
+    text-align: center;
+    z-index: 100;
+    left: 50%;
+}
+
+#question-title {
+    padding-top: 60px;
+}
+
+.question-box {
+    position: relative;
+    width: 70%;
+    height: 300px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    color: $dark;
+    margin-top: 50px;
+    padding: 10px;
+    border: 2px solid grey;
+}
+
+.question-fold {
+    position: absolute;
+}
+
+.question-text {
+    padding-top: 50px;
+    font-size: 1.5em;
+    margin: 10px;
+    padding: 50px 10px;
+}
+
+.question-awnser {
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+}
+
+.question-more {
+    position: absolute;
+    display: flex;
+    right: 20px;
+    bottom: 20px;
+}
+
+#more-ico {
+    height: 15px;
+    width: 15px;
+    background: $dark;
+    border-radius: 50%;
+    margin: auto 5px;
+}
+
+.awnser-button {
+    height: 50px;
+    width: 50px;
+    margin: 20px;
+    background: transparent;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: all .5s
+}
+
+.awnser-button:hover {
+    background: rgba(255, 255, 255, 0.36);
+}
+
+.awnser-button p {
+    text-align: center;
+    margin: 35% 0;
+}
+
+
+/*************************SETTINGS***********************/
+
+
+#left-control {
+    display: none;
+}
+
+#settings {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    //width: 200px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.settings-box {
+    display: flex;
+    justify-content: center;
+}
+
+select {
+    padding: 7px;
+    margin: 10px;
+    border: 1px solid $dark;
+    width: 150px;
+    background: $dark;
+    color: white;
+
+    height: 30px;
+    padding: 0.5rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: $light;
+    background-image: url(../ico/ico-arrow.svg) !important;
+    background-origin: content-box !important;
+    background-position: right -1rem center !important;
+    background-repeat: no-repeat !important;
+    //background-size: 9px 6px !important;
+    padding-right: 1.5rem;
+    transition: all .5s;
+    color: rgb
+}
+
+select:focus {
+    outline: none;
+    border: 1px solid #8a8a8a;
+    background-color: $dark;
+    box-shadow: 0 0 5px #cacaca;
+}
+
+form {
+    margin: 0;
+}
+
+.settings-ico {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    margin: auto 0;
+    box-shadow: 0 0 10px #000;
+    //border: 2px solid $dark;
+    background-size: 80%;
+    background-position: center;
+background-repeat: no-repeat;
+}
+
+.dissabled {
+    opacity: .4;
+}
+
+.settings-ico#ico_1 {
+    background-image: url(../ico/ico-density.svg);
+}
+
+.settings-ico#ico_2 {
+    background-image: url(../ico/ico-borders.svg);
+}
+
+.settings-ico#ico_3 {
+    background-image: url(../ico/ico-colors.svg);
+}
+
+.settings-ico#ico_4 {
+    background-image: url(../ico/ico-velocity.svg);
 }

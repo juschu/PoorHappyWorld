@@ -1,0 +1,459 @@
+<html>
+<head>
+    <title>Poor Happy World</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- <script>if (!window.jQuery){document.write('<script src="./js/lib/jquery-3.1.1.min.js"><\/script>');}</script> -->
+    <!-- <script src="./js/lib/three.js"></script> -->
+    <!-- <script src="./js/lib/require.js"></script> -->
+    <script>if (!window.jQuery){document.write('<script src="./js/jquery-3.1.1.min.js"><\/script>');}</script>
+    <script src="./js/three.js"></script>
+    <!-- https://github.com/mapbox/earcut -->
+    <script src="./js/earcut.min.js"></script>
+    <!-- https://github.com/Wilt/three.js_triangulation -->
+    <script src="./js/triangulation.js"></script>
+    <!-- https://github.com/evanw/csg.js/ -->
+    <script src="./js/csg.js"></script>
+    <!-- https://github.com/chandlerprall/ThreeCSG -->
+    <script src="./js/ThreeCSG.js"></script>
+
+    <!-- <script src="./js/Country-dist.js"></script>
+    <script src="./js/Earth-dist.js"></script>
+    <script src="./js/OrbitCamera-dist.js"></script>
+    <script src="./js/app-dist.js"></script> -->
+
+    <script src="./js/Country.js"></script>
+    <script src="./js/Earth.js"></script>
+    <script src="./js/OrbitCamera.js"></script>
+    <script src="./js/app.js"></script>
+    <!-- <script async src="./js/app.js"></script> -->
+
+	<link type="text/css" rel="stylesheet" href="./css/style.css" />
+	<link type="text/css" rel="stylesheet" href="./css/futura/stylesheet.css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+</head>
+
+
+<body>
+
+<!--    push test-->
+    <div id="questions">
+       <div id="question-close"></div>
+        <div id="wrapper">
+           <div id="question-title">
+               <h2>Quiz</h2>
+               <p>Questions 1 / 10</p>
+           </div>
+           <div class="question-box">
+               <div class="question-fold">
+                  <div class="info-title">
+                        <div class="info-title-ico"></div>
+                        <div class="info-title-title">
+                            <h2>Egypt</h2>
+                            Kayro
+                        </div>
+                   </div>
+
+                 <hr>
+
+                   <div class="question-text">
+                       <p>Brazil is bigger in countrysize but optains less inhabitants than germany in 2017</p>
+                   </div>
+               </div>
+               <div class="question-more">
+                   <p>show details</p>
+                   <div id="more-ico"></div>
+               </div>
+           </div>
+
+
+           <div class="question-awnser">
+               <div class="awnser-button">
+                   <p>Yes</p>
+               </div>
+               <div class="awnser-button">
+                   <p>No</p>
+               </div>
+           </div>
+
+        </div>
+    </div>
+
+
+
+    <div id="earth-container"></div>
+
+
+<!-- Quiz Box-->
+
+    <section id="quiz" class="box">
+
+        <div class="quiz-text">
+            <p class="quiz-selection">selected Country</p>
+            <h2 class="quiz-title">Germany</h2>
+        </div>
+
+        <div class="quiz-country"></div>
+
+        <div class="button" id="quiz-button">
+           <div class="button-ico"></div>
+            <p>Quiz</p>
+        </div>
+
+        <div id="return"></div>
+    </section>
+
+
+
+<!-- Linke Box mit den Controllobjekten-->
+
+    <section id="left-control" class="box">
+
+
+	<div class="container">
+
+		<div class="switch">
+			<input type="radio" name="switch1" id="switch-off">
+			<input type="radio" name="switch1" id="switch-on" checked>
+
+			<label for="switch-off">Off</label>
+			<label for="switch-on">On</label>
+
+			<span class="toggle"></span>
+		</div> <!-- end switch -->
+
+		<div class="control-text">
+		    <p>number<br>popolution</p>
+		</div>
+
+	</div> <!-- end container -->
+
+
+
+	<div class="container">
+
+		<div class="switch">
+
+			<input type="radio" name="switch2" id="switch-off">
+			<input type="radio" name="switch2" id="switch-on" checked>
+
+			<label for="switch-off">Off</label>
+			<label for="switch-on">On</label>
+
+			<span class="toggle"></span>
+
+		</div> <!-- end switch -->
+
+		<div class="control-text">
+		    <p>selection<br>country</p>
+		</div>
+
+	</div> <!-- end container -->
+
+
+
+	<div class="container">
+
+		<div class="switch">
+			<input type="radio" name="switch3" id="switch-off">
+			<input type="radio" name="switch3" id="switch-on" checked>
+
+			<label for="switch-off">Off</label>
+			<label for="switch-on">On</label>
+
+			<span class="toggle"></span>
+		</div> <!-- end switch -->
+
+		<div class="control-text">
+		    <p>colors<br>wealth</p>
+		</div>
+
+	</div> <!-- end container -->
+
+
+
+	<div class="container">
+
+		<div class="switch">
+			<input type="radio" name="switch" id="switch-off">
+			<input type="radio" name="switch" id="switch-on" checked>
+
+			<label for="switch-off">Off</label>
+			<label for="switch-on">On</label>
+
+			<span class="toggle"></span>
+		</div> <!-- end switch -->
+
+		<div class="control-text">
+		    <p>pace<br>well-beeing</p>
+		</div>
+
+	</div> <!-- end container -->
+
+
+    </section>
+
+
+<!-- Linke Box mit EInstellungen -->
+
+    <section id="settings">
+
+       <b>Wählen Sie Ihr Reiseziel:</b>
+        <div class="settings-box">
+            <div class="settings-ico" id="ico_1"></div>
+            <div class="settings-dropdown">
+                    <form method="POST">
+                        <select name="Population" size="1">
+                            <option>Population</option>
+                            <option>awsomeness</option>
+                            <option>something else</option>
+                        </select>
+                    </form>
+            </div>
+        </div>
+
+        <div class="settings-box">
+            <div class="settings-ico" id="ico_3"></div>
+            <div class="settings-dropdown">
+                    <form method="POST">
+                        <select name="Population" size="1">
+                            <option>Country size</option>
+                            <option>awsomeness</option>
+                            <option>something else</option>
+                        </select>
+                    </form>
+            </div>
+        </div>
+
+        <div class="settings-box">
+            <div class="settings-ico" id="ico_4"></div>
+            <div class="settings-dropdown">
+                    <form method="POST">
+                        <select name="Population" size="1">
+                            <option>wealth</option>
+                            <option>awsomeness</option>
+                            <option>something else</option>
+                        </select>
+                    </form>
+            </div>
+        </div>
+
+        <div class="settings-box">
+            <div class="settings-ico dissabled" id="ico_2"></div>
+            <div class="settings-dropdown">
+                    <form method="POST">
+                        <select name="Population" size="1">
+                            <option>wejhydfbljhfbll beeing</option>
+                            <option>awsomeness</option>
+                            <option>something else</option>
+                        </select>
+                    </form>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        $(function(){
+            $(".settings-ico").on("click", function(){
+                console.log("judihu");
+                $(this).toggleClass("dissabled");
+            });
+        });
+    </script>
+
+<!-- rechte Box mit den Länderinfos-->
+
+    <section id="right-infos" class="box">
+
+       <div class="info-title">
+           <div class="info-title-ico"></div>
+            <div class="info-title-title">
+                <h2>Egypt</h2>
+                Kayro
+            </div>
+       </div>
+<hr>
+        <div id="info-box">
+            <div class="info-box" >
+                <div class="info-text">
+                   <div class="info-text-left">
+                       <p class="info-category">Population</p>
+                       <p class="info-data">202.2 Million</p>
+                       <p class="info-data-2">57.2 Million</p>
+                   </div>
+                   <p class="info-rank">47th</p>
+                 </div>
+
+                <div class="info-bar-compare">
+                    <div class="info-bar-box">
+                       <span class="info-bar-ico" id="population"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                    </div>
+
+                    <div class="info-bar-box second">
+                      <span class="info-bar-ico" id="population"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-box" >
+                <div class="info-text">
+                  <div class="info-text-left">
+                       <p class="info-category">Country size</p>
+                       <p class="info-data">872.257 km²</p>
+                       <p class="info-data-2">96.214 km²</p>
+                   </div>
+                   <p class="info-rank">62th</p>
+                 </div>
+
+                <div class="info-bar-compare">
+                    <div class="info-bar-box ">
+                       <span class="info-bar-ico" id="country-size"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                    </div>
+
+                    <div class="info-bar-box second">
+                       <span class="info-bar-ico" id="country-size"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-text">
+                   <div class="info-text-left">
+                       <p class="info-category">Wealth</p>
+                       <p class="info-data">102.2 gdp</p>
+                       <p class="info-data-2">507.6 gdp</p>
+                   </div>
+                   <p class="info-rank">4th</p>
+                 </div>
+
+                <div class="info-bar-compare">
+                    <div class="info-bar-box">
+                       <span class="info-bar-ico" id="wealth"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                    </div>
+
+                    <div class="info-bar-box second">
+                       <span class="info-bar-ico" id="wealth"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                       <span class="info-bar"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-box">
+                <div class="info-text">
+                   <div class="info-text-left">
+                       <p class="info-category">Well beeing</p>
+                       <p class="info-data">64.2 dhp</p>
+                       <p class="info-data-2">42.1 dhp</p>
+                   </div>
+                   <p class="info-rank">145th</p>
+                 </div>
+
+                <div class="info-bar-compare">
+                    <div class="info-bar-box">
+                       <span class="info-bar-ico" id="well-beeing"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar"></span>
+                    </div>
+
+                    <div class="info-bar-box second">
+                       <span class="info-bar-ico" id="well-beeing"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar active"></span>
+                       <span class="info-bar "></span>
+                       <span class="info-bar "></span>
+                       <span class="info-bar"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://de.wikipedia.org/wiki/%C3%84gypten" target="_blank">
+            <div id="info-button" class="button">
+                <div class="button-ico"></div>
+                <p>Wikipedia</p>
+            </div>
+        </a>
+
+    </section>
+
+    <script>
+        $("#questions").load("./quiz.html");
+        $("#quiz-button").click(function(){
+            console.log("heureka");
+            $("#wrapper")
+                .animate({
+                    top: "0"
+                });
+            $("#questions")
+                .animate({
+                    top: "0"
+                });
+            $("#question-close")
+                .animate({
+                    top: "0"
+                });
+        });
+
+        $("#question-close").click(function(){
+            console.log("schließen");
+            $("#wrapper")
+                .animate({
+                    top: "-150%"
+                });
+            $("#questions")
+                .animate({
+                    top: "-150%"
+                });
+            $("#question-close")
+                .animate({
+                    top: "-150%"
+                });
+        });
+    </script>
+</body>
+</html>

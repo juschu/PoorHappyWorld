@@ -32,7 +32,7 @@ var App = function () {
         this.earthContainer = document.querySelector("div#earth-container");
         this.earthScene = new THREE.Scene();
         this.earth = new Earth(200, this.earthScene);
-        this.earthCamera = new OrbitCamera(600, 75, this.earthContainer.getBoundingClientRect().width / this.earthContainer.getBoundingClientRect().height, this.earth.pos);
+        this.earthCamera = new OrbitCamera(400, 75, this.earthContainer.getBoundingClientRect().width / this.earthContainer.getBoundingClientRect().height, this.earth.pos);
         this.earthRenderer = new THREE.WebGLRenderer({
             antialias: true
         });
