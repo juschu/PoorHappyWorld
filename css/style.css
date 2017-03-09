@@ -74,9 +74,6 @@ div#earth-container {
   height: 100%;
   width: 100%; }
 
-section {
-  display: none; }
-
 /*******************RECHTE INFOBOX*******************/
 #right-infos {
   right: 0;

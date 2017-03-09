@@ -34,25 +34,27 @@ var Earth = function () {
         this.borderCtx.lineWidth = 0.125 * this.resFactor;
         this.borderCtx.strokeStyle = "#000";
 
-        console.log(this.borderCanvas);
-        this.texture = new THREE.Texture(this.borderCanvas);
-        this.drawTexture();
-        // this.texture = THREE.ImageUtils.loadTexture("../img/earth2.jpg");
-        // this.texture = THREE.ImageUtils.loadTexture("../img/borders.png");
-        // let bordermaterial = new THREE.MeshLambertMaterial({
-        //     color: 0x2E6AEE,
-        //     // wireframe: true,
-        //     map: this.texture,
-        // });
-        // let geometry = new THREE.SphereGeometry(this.radius*0.999, 50, 50);
-        this.oceanMesh = new THREE.Mesh(new THREE.SphereGeometry(this.radius * 0.999, 50, 50), new THREE.MeshLambertMaterial({
-            color: 0x2E6AEE,
-            // wireframe: true,
-            map: this.texture
+        // this.texture = new THREE.Texture(this.borderCanvas);
+        // this.drawTexture();
+        // this.oceanMesh = new THREE.Mesh(
+        //     new THREE.SphereGeometry(this.radius*0.999, 50, 50),
+        //     new THREE.MeshLambertMaterial({
+        //         color: 0x2E6AEE,
+        //         // wireframe: true,
+        //         map: this.texture,
+        //     })
+        // );
+        this.oceanMesh = new THREE.Mesh(new THREE.SphereGeometry(this.radius, 50, 50), new THREE.MeshLambertMaterial({
+            // color: 0x2E6AEE,
+            map: THREE.ImageUtils.loadTexture("../img/earth2.jpg")
         }));
-        // this.ocean
+        this.borderMesh = new THREE.Mesh(new THREE.SphereGeometry(this.radius, 50, 50), new THREE.MeshLambertMaterial({
+            map: THREE.ImageUtils.loadTexture("../img/borders.png")
+        }));
         this.oceanMesh.position.set(this.pos.x, this.pos.y, this.pos.z);
         this.scene.add(this.oceanMesh);
+        // this.borderMesh.position.set(this.pos.x, this.pos.y, this.pos.z);
+        // this.scene.add(this.borderMesh);
     }
 
     _createClass(Earth, [{

@@ -36,7 +36,8 @@ var App = function () {
         this.earthRenderer = new THREE.WebGLRenderer({
             antialias: true
         });
-        this.earthRenderer.setClearColor(0x000000, 0);
+        // this.earthRenderer.setClearColor(0xffffff, 0);
+        this.earthRenderer.setClearColor(0xffffff, 1);
         this.setEarthRenderSize();
         this.earthContainer.appendChild(this.earthRenderer.domElement);
 
@@ -46,15 +47,11 @@ var App = function () {
         this.earthScene.add(new THREE.AmbientLight(0x505050));
 
         // register eventlistener
-        // this.earthContainer.addEventListener("click", this.onClick);
+        this.earthContainer.addEventListener("click", this.onClick);
         this.earthContainer.addEventListener("mousedown", this.onMouseDown);
         this.earthContainer.addEventListener("mouseup", this.onMouseUp);
         this.earthContainer.addEventListener("mousemove", this.onMouseMove);
         window.addEventListener("resize", this.setEarthRenderSize);
-
-        this.earthContainer.addEventListener("click", function () {
-            app.earth.drawTexture();
-        });
 
         // build earth
         // https://github.com/mapbox/earcut
@@ -94,62 +91,6 @@ var App = function () {
         //         }, 10000);
         //     },
         // });
-
-
-        // let box = new THREE.BoxGeometry(300, 300, 300);
-        // let sphere = new THREE.SphereGeometry(200, 32, 32);
-        // let shape = new THREE.Shape();
-        // shape.moveTo(-100, 100);
-        // shape.lineTo(100, 100);
-        // shape.lineTo(100, -100);
-        // shape.lineTo(-100, -100);
-        // shape.lineTo(-100, 100);
-        // let extrude = new THREE.ExtrudeGeometry(shape, {amount: 300, bevelEnabled: false});
-        //
-        // let rot = new THREE.MeshLambertMaterial({color: 0xff0000, side: THREE.DoubleSide});
-        // let gruen = new THREE.MeshLambertMaterial({color: 0x00ff00, side: THREE.DoubleSide});
-        // let blau = new THREE.MeshLambertMaterial({color: 0x0000ff, side: THREE.DoubleSide});
-        //
-        // let meshRot = new THREE.Mesh(extrude, rot);
-        // // meshRot.position.set(100, 100, 100);
-        // let meshBlau = new THREE.Mesh(sphere, blau);
-        // // meshBlau.position.set(-100, -100, 0);
-        // console.log("meshRot: %o", meshRot);
-        // console.log("meshBlau: %o", meshBlau);
-        //
-        // meshRot.geometry.vertices.forEach(function(vert){
-        //     console.log("vert: %o", vert);
-        //     if (vert.z === 0) {
-        //         // Erdmittelpunkt
-        //         vert.x *= .0;
-        //         vert.y *= .0;
-        //     } else {
-        //         // // Erdoberfläche
-        //         // let lon = vert.x;
-        //         // let lat = vert.y;
-        //         // let rFactor = 2;
-        //         // vert.x = Math.sin(lon*Math.PI/180)*Math.cos(lat*Math.PI/180)*that.earth.radius*rFactor;
-        //         // vert.z = Math.cos(lon*Math.PI/180)*Math.cos(lat*Math.PI/180)*that.earth.radius*rFactor;
-        //         // vert.y = Math.sin(lat*Math.PI/180)*that.earth.radius*rFactor;
-        //     }
-        // });
-        //
-        // let csgRot = new ThreeBSP(meshRot);
-        // let csgBlau = new ThreeBSP(meshBlau);
-        // console.log("csgRot: %o", csgRot);
-        // console.log("csgBlau: %o", csgBlau);
-        //
-        // let csgProcessed = csgRot.intersect(csgBlau);
-        // // let csgProcessed = csgBlau.subtract(csgRot);
-        // console.log("csgProcessed: %o", csgProcessed);
-        // let meshProcessed = csgProcessed.toMesh(gruen);
-        // console.log("meshProcessed: %o", meshProcessed);
-        // meshProcessed.geometry.computeVertexNormals();
-        // // meshProcessed.rotation.set(Math.PI/8, Math.PI/8, 0);
-        // // this.earthScene.add(meshRot);
-        // // this.earthScene.add(meshBlau);
-        // this.earthScene.add(meshProcessed);
-
 
         this.earthRenderLoop();
     }
