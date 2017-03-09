@@ -46,17 +46,21 @@ var App = function () {
         this.earthScene.add(new THREE.AmbientLight(0x505050));
 
         // register eventlistener
-        this.earthContainer.addEventListener("click", this.onClick);
+        // this.earthContainer.addEventListener("click", this.onClick);
         this.earthContainer.addEventListener("mousedown", this.onMouseDown);
         this.earthContainer.addEventListener("mouseup", this.onMouseUp);
         this.earthContainer.addEventListener("mousemove", this.onMouseMove);
         window.addEventListener("resize", this.setEarthRenderSize);
 
+        this.earthContainer.addEventListener("click", function () {
+            app.earth.drawTexture();
+        });
+
         // build earth
         // https://github.com/mapbox/earcut
         // https://github.com/Wilt/three.js_triangulation
         THREE.Triangulation.setLibrary(THREE.Triangulation.libraries.earcut);
-        // // $.ajax(window.location+"img/earth.svg", {
+        // $.ajax(window.location+"img/earth.svg", {
         // $.ajax(window.location+"img/generic.svg", {
         //     success: function(svg){
         //         var paths = svg.querySelectorAll(".country");
@@ -68,8 +72,26 @@ var App = function () {
         //                 paths[i].getElementsByTagName("path")[0].getAttribute("d")
         //             );
         //         }
-        //         app.earth.transform();
+        //         // app.earth.transform();
         //         console.log("fertig");
+        //         // console.log(app.earth.oceanMesh.material);
+        //         console.log(app.earth.borderCanvas);
+        //         document.getElementsByTagName("body")[0].appendChild(app.earth.borderCanvas);
+        //         // app.earth.oceanMesh.material.map = THREE.ImageUtils.loadTexture("../img/earth2.jpg");
+        //         // app.earth.oceanMesh.material.map = THREE.TextureLoader("../img/earth2.jpg");
+        //         // app.earth.oceanMesh.material.needsUpdate = true;
+        //         setTimeout(function(){
+        //             // app.earth.oceanMesh.material.map = new THREE.Texture(app.earth.borderCanvas);
+        //             // app.earth.oceanMesh.material = new THREE.MeshLambertMaterial({
+        //             //     // color: 0x2E6AEE,
+        //             //     // wireframe: true,
+        //             //     map: new THREE.Texture(app.earth.borderCanvas),
+        //             //     // map: "../img/earth1.jpg",
+        //             //     // map: THREE.ImageUtils.loadTexture("../img/earth2.jpg"),
+        //             // });
+        //             // app.earth.oceanMesh.material.needsUpdate = true;
+        //             console.log("timeout");
+        //         }, 10000);
         //     },
         // });
 
@@ -136,6 +158,7 @@ var App = function () {
         key: "earthRenderLoop",
         value: function earthRenderLoop() {
             requestAnimationFrame(app.earthRenderLoop);
+            // app.earth.texture.needsUpdate = true;
             app.earthRenderer.render(app.earthScene, app.earthCamera.camera);
         }
     }, {

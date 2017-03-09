@@ -15,40 +15,66 @@ var Earth = function () {
         this.scene = scene;
         this.csgMesh = null;
         this.oceanMesh = null;
+        this.borderMesh = null;
         this.pos = new THREE.Vector3(0, 0, 0);
 
-        // this.resFactor = 8;
-        this.resFactor = 1;
+        // this.textureHeight = 1024;
+        // this.textureHeight = 512;
+        this.textureHeight = 256;
+        this.resFactor = this.textureHeight / 180;
         this.borderCanvas = document.createElement("canvas");
-        this.borderCanvas.setAttribute("height", 180 * this.resFactor);
-        this.borderCanvas.setAttribute("width", 360 * this.resFactor);
+        this.borderCanvas.setAttribute("height", this.textureHeight);
+        this.borderCanvas.setAttribute("width", this.textureHeight * 2);
         this.borderCtx = this.borderCanvas.getContext("2d");
         this.fillCanvas = document.createElement("canvas");
-        this.fillCanvas.setAttribute("height", 180 * this.resFactor);
-        this.fillCanvas.setAttribute("width", 360 * this.resFactor);
+        this.fillCanvas.setAttribute("height", this.textureHeight);
+        this.fillCanvas.setAttribute("width", this.textureHeight * 2);
         this.fillCtx = this.fillCanvas.getContext("2d");
         document.getElementsByTagName("body")[0].appendChild(this.borderCanvas);
-        this.borderCtx.lineWidth = 1 * this.resFactor;
+        this.borderCtx.lineWidth = 0.125 * this.resFactor;
         this.borderCtx.strokeStyle = "#000";
-        this.borderCtx.clearRect(0, 0, 360 * this.resFactor, 180 * this.resFactor);
-        this.borderCtx.fillStyle = "#FFF";
-        this.borderCtx.beginPath();
-        this.borderCtx.moveTo(this.mapLon2X(-40), this.mapLat2Y(40));
-        this.borderCtx.lineTo(this.mapLon2X(40), this.mapLat2Y(40));
-        this.borderCtx.lineTo(this.mapLon2X(40), this.mapLat2Y(-40));
-        this.borderCtx.lineTo(this.mapLon2X(-40), this.mapLat2Y(-40));
-        this.borderCtx.lineTo(this.mapLon2X(-40), this.mapLat2Y(40));
-        this.borderCtx.stroke();
 
+        console.log(this.borderCanvas);
+        this.texture = new THREE.Texture(this.borderCanvas);
+        this.drawTexture();
+        // this.texture = THREE.ImageUtils.loadTexture("../img/earth2.jpg");
+        // this.texture = THREE.ImageUtils.loadTexture("../img/borders.png");
+        // let bordermaterial = new THREE.MeshLambertMaterial({
+        //     color: 0x2E6AEE,
+        //     // wireframe: true,
+        //     map: this.texture,
+        // });
+        // let geometry = new THREE.SphereGeometry(this.radius*0.999, 50, 50);
         this.oceanMesh = new THREE.Mesh(new THREE.SphereGeometry(this.radius * 0.999, 50, 50), new THREE.MeshLambertMaterial({
             color: 0x2E6AEE,
-            wireframe: true
+            // wireframe: true,
+            map: this.texture
         }));
+        // this.ocean
         this.oceanMesh.position.set(this.pos.x, this.pos.y, this.pos.z);
         this.scene.add(this.oceanMesh);
     }
 
     _createClass(Earth, [{
+        key: "drawTexture",
+        value: function drawTexture() {
+            console.log("message");
+            this.borderCtx.clearRect(0, 0, 360 * this.resFactor, 180 * this.resFactor);
+            this.borderCtx.rect(0, 0, 360 * this.resFactor, 180 * this.resFactor);
+            this.borderCtx.fillStyle = "#00f";
+            this.borderCtx.fill();
+            this.borderCtx.beginPath();
+            this.borderCtx.moveTo(Math.random() * 300, Math.random() * 300);
+            // this.borderCtx.moveTo(this.mapLon2X(-40), this.mapLat2Y(40));
+            this.borderCtx.lineTo(this.mapLon2X(40), this.mapLat2Y(40));
+            this.borderCtx.lineTo(this.mapLon2X(40), this.mapLat2Y(-40));
+            this.borderCtx.lineTo(this.mapLon2X(-40), this.mapLat2Y(-40));
+            this.borderCtx.lineTo(this.mapLon2X(-40), this.mapLat2Y(40));
+            this.borderCtx.fillStyle = "#0f0";
+            this.borderCtx.fill();
+            this.texture.needsUpdate = true;
+        }
+    }, {
         key: "mapLon2X",
         value: function mapLon2X(lon) {
             return (lon + 180) * this.resFactor;

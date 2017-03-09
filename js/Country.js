@@ -33,7 +33,7 @@ class Country{
             actions = pathData;
         }
 
-        let shape = new THREE.Shape();
+        // let shape = new THREE.Shape();
         let pos = new THREE.Vector2(0, 0);
         let start = new THREE.Vector2(0, 0);
         let moved = false;
@@ -49,36 +49,56 @@ class Country{
             }
             if (a.command == "M" || a.command == "m") {
                 if (moved) {
-                    shape.lineTo(start.x, start.y);
+                    // shape.lineTo(start.x, start.y);
+                    this.earth.borderCtx.lineTo(
+                        this.earth.mapLon2X(start.x),
+                        this.earth.mapLat2Y(start.y)
+                    );
                     this.addPath(actions.slice(i));
+                    this.earth.borderCtx.stroke();
+                    this.earth.borderCtx.fill();
                     break;
                 } else {
                     moved = true;
-                    shape.moveTo(pos.x, pos.y);
+                    // shape.moveTo(pos.x, pos.y);
+                    this.earth.borderCtx.moveTo(
+                        this.earth.mapLon2X(pos.x),
+                        this.earth.mapLat2Y(pos.y)
+                    );
                     start.x = pos.x;
                     start.y = pos.y;
                 }
             } else if  (a.command == "L" || a.command == "l") {
-                shape.lineTo(pos.x, pos.y);
+                // shape.lineTo(pos.x, pos.y);
+                this.earth.borderCtx.lineTo(
+                    this.earth.mapLon2X(pos.x),
+                    this.earth.mapLat2Y(pos.y)
+                );
             } else if (a.command == "Z" || a.command == "z") {
                 if (start.x != pos.x || start.y != pos.y) {
-                    shape.lineTo(start.x, start.y);
+                    // shape.lineTo(start.x, start.y);
+                    this.earth.borderCtx.lineTo(
+                        this.earth.mapLon2X(start.x),
+                        this.earth.mapLat2Y(start.y)
+                    );
+                    this.earth.borderCtx.stroke();
+                    this.earth.borderCtx.fill();
                 }
             }
         }
 
-        let extrudeSettings = {
-            amount: 1,
-            bevelEnabled: false,
-        };
-        let geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-        let material = new THREE.MeshLambertMaterial({color: this.inactiveColor});
-        // let mesh = new THREE.Mesh(geometry, material);
-        let mesh = new THREE.Mesh(geometry);
-        mesh.country = this;
-        // if (this.code != "TST")
-        //     app.earthScene.add(mesh);
-        this.spaceMeshes.push(mesh);
+        // let extrudeSettings = {
+        //     amount: 1,
+        //     bevelEnabled: false,
+        // };
+        // let geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+        // let material = new THREE.MeshLambertMaterial({color: this.inactiveColor});
+        // // let mesh = new THREE.Mesh(geometry, material);
+        // let mesh = new THREE.Mesh(geometry);
+        // mesh.country = this;
+        // // if (this.code != "TST")
+        // //     app.earthScene.add(mesh);
+        // this.spaceMeshes.push(mesh);
     }
 
     transform(){

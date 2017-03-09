@@ -23,9 +23,9 @@ Example for painting countries:
 <g id="dummy">
 </g>
 
-<g class="country TST">
+<!-- <g class="country TST">
 <path d="M-17.31 51.03L-48.46 47.23 -45.56 6.31Z"/>
-</g>
+</g> -->
 
 <g class="country AFG">
 <!-- <g class="country TST"> -->

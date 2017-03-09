@@ -72,11 +72,7 @@ h2 {
 
 div#earth-container {
   height: 100%;
-  width: 100%;
-  display: none; }
-
-body > canvas {
-  border: 1px solid black; }
+  width: 100%; }
 
 section {
   display: none; }
