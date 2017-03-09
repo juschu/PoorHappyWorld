@@ -76,44 +76,76 @@ class Country{
         // let mesh = new THREE.Mesh(geometry, material);
         let mesh = new THREE.Mesh(geometry);
         mesh.country = this;
-        app.earthScene.add(mesh);
+        // if (this.code != "TST")
+        //     app.earthScene.add(mesh);
         this.spaceMeshes.push(mesh);
     }
 
     transform(){
         let that = this;
-        this.spaceMeshes.forEach(function(spaceMesh){
-            spaceMesh.geometry.vertices.forEach(function(vert){
-                if (vert.z === 0) {
-                    // Erdmittelpunkt
-                    vert.x = that.earth.pos.x;
-                    vert.y = that.earth.pos.y;
-                } else {
-                    // Erdoberfläche
+        if (
+            // that.code == "RUS" ||
+            // that.code == "CAN" ||
+            // that.code == "USA" ||
+            // that.code == "BRA" ||
+            that.code == "TST" ||
+            // true ||
+            false
+        ) {
+            this.spaceMeshes.forEach(function(spaceMesh){
+                spaceMesh.geometry.vertices.forEach(function(vert){
+                    // console.log("transform vertex");
+                    let rFactor = 0;
+                    if (vert.z === 0) {
+                        // Erdmittelpunkt
+                        rFactor = 0.1;  // bei 0 tritt bei der boolschen Operation ein Fehler auf
+                        // vert.x = that.earth.pos.x;
+                        // vert.y = that.earth.pos.y;
+                    } else {
+                        // Erdoberfläche
+                        rFactor = 1.8;
+                        // rFactor = 1.1;
+                    }
                     let lon = vert.x;
                     let lat = vert.y;
-                    let rFactor = 1;
                     vert.x = Math.sin(lon*Math.PI/180)*Math.cos(lat*Math.PI/180)*that.earth.radius*rFactor;
                     vert.z = Math.cos(lon*Math.PI/180)*Math.cos(lat*Math.PI/180)*that.earth.radius*rFactor;
                     vert.y = Math.sin(lat*Math.PI/180)*that.earth.radius*rFactor;
+                });
+
+                if (that.code == "TST") {
+                    // console.log("-----------------------");
+                    // console.log("spaceMesh: %o", spaceMesh);
+                    // console.log("that.earth.oceanMesh: %o", that.earth.oceanMesh);
+                    let csgSpaceMesh = new ThreeBSP(spaceMesh);
+                    let csgOceanMesh = new ThreeBSP(that.earth.oceanMesh);
+                    // console.log("csgSpaceMesh: %o", csgSpaceMesh);
+                    // console.log("csgOceanMesh: %o", csgOceanMesh);
+                    let csgResult = csgOceanMesh.intersect(csgSpaceMesh);
+                    // console.log("csgResult: %o", csgResult);
+                    let mesh = csgResult.toMesh(new THREE.MeshLambertMaterial({color: that.inactiveColor, side: THREE.DoubleSide}));
+                    mesh.geometry.computeVertexNormals();
+                    // console.log("mesh: %o", mesh);
+                    mesh.country = that;
+                    that.earth.scene.add(mesh);
+                    that.meshes.push(mesh);
                 }
+
+                console.log("spaceMesh: %o", spaceMesh);
+
+                spaceMesh.geometry.faces.forEach(function(face){
+                    // console.log("face: %o", face);
+                    [face.a, face.b, face.c].forEach(function(vertexIndex){
+                        let vector = new THREE.Vector3(
+                            spaceMesh.geometry.vertices[vertexIndex].x,
+                            spaceMesh.geometry.vertices[vertexIndex].y,
+                            spaceMesh.geometry.vertices[vertexIndex].z
+                        );
+                        console.log("length: %d", vector.length());
+                    });
+                });
             });
-            // // console.log("-----------------------");
-            // // console.log("spaceMesh: %o", spaceMesh);
-            // // console.log("that.earth.oceanMesh: %o", that.earth.oceanMesh);
-            // let csgSpaceMesh = new ThreeBSP(spaceMesh);
-            // let csgOceanMesh = new ThreeBSP(that.earth.oceanMesh);
-            // // console.log("csgSpaceMesh: %o", csgSpaceMesh);
-            // // console.log("csgOceanMesh: %o", csgOceanMesh);
-            // let csgResult = csgSpaceMesh.intersect(csgOceanMesh);
-            // // console.log("csgResult: %o", csgResult);
-            // let mesh = csgResult.toMesh(new THREE.MeshLambertMaterial({color: that.inactiveColor, side: THREE.DoubleSide}));
-            // mesh.geometry.computeVertexNormals();
-            // // console.log("mesh: %o", mesh);
-            // mesh.country = that;
-            // that.earth.scene.add(mesh);
-            // that.meshes.push(mesh);
-        });
+        }
     }
 
     setActive(){

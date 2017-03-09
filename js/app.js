@@ -51,24 +51,25 @@ class App{
         // https://github.com/mapbox/earcut
         // https://github.com/Wilt/three.js_triangulation
         THREE.Triangulation.setLibrary(THREE.Triangulation.libraries.earcut);
-        $.ajax(window.location+"img/earth.svg", {
-        // $.ajax(window.location+"img/generic.svg", {
+        // $.ajax(window.location+"img/earth.svg", {
+        $.ajax(window.location+"img/generic.svg", {
             success: function(svg){
                 var paths = svg.querySelectorAll(".country");
-                paths.forEach(function(el){
-                    el.classList.remove("country");
+                for (let i = 0; i<paths.length; i++) {
+                    // console.log("path #"+i);
+                    paths[i].classList.remove("country");
                     app.earth.addPath(
-                        el.getAttribute("class"),
-                        el.getElementsByTagName("path")[0].getAttribute("d")
+                        paths[i].getAttribute("class"),
+                        paths[i].getElementsByTagName("path")[0].getAttribute("d")
                     );
-                });
+                }
                 app.earth.transform();
                 console.log("fertig");
             },
         });
 
 
-        // let geometry = new THREE.BoxGeometry(300, 300, 300);
+        // let box = new THREE.BoxGeometry(300, 300, 300);
         // let sphere = new THREE.SphereGeometry(200, 32, 32);
         // let shape = new THREE.Shape();
         // shape.moveTo(-100, 100);
@@ -78,31 +79,51 @@ class App{
         // shape.lineTo(-100, 100);
         // let extrude = new THREE.ExtrudeGeometry(shape, {amount: 300, bevelEnabled: false});
         //
-        // let rot = new THREE.MeshLambertMaterial({color: 0xff0000});
-        // let blau = new THREE.MeshLambertMaterial({color: 0x0000ff});
+        // let rot = new THREE.MeshLambertMaterial({color: 0xff0000, side: THREE.DoubleSide});
+        // let gruen = new THREE.MeshLambertMaterial({color: 0x00ff00, side: THREE.DoubleSide});
+        // let blau = new THREE.MeshLambertMaterial({color: 0x0000ff, side: THREE.DoubleSide});
         //
-        // let meshRot = new THREE.Mesh(extrude);
+        // let meshRot = new THREE.Mesh(extrude, rot);
         // // meshRot.position.set(100, 100, 100);
-        // let meshBlau = new THREE.Mesh(sphere);
+        // let meshBlau = new THREE.Mesh(sphere, blau);
         // // meshBlau.position.set(-100, -100, 0);
         // console.log("meshRot: %o", meshRot);
         // console.log("meshBlau: %o", meshBlau);
+        //
+        // meshRot.geometry.vertices.forEach(function(vert){
+        //     console.log("vert: %o", vert);
+        //     if (vert.z === 0) {
+        //         // Erdmittelpunkt
+        //         vert.x *= .0;
+        //         vert.y *= .0;
+        //     } else {
+        //         // // Erdoberfläche
+        //         // let lon = vert.x;
+        //         // let lat = vert.y;
+        //         // let rFactor = 2;
+        //         // vert.x = Math.sin(lon*Math.PI/180)*Math.cos(lat*Math.PI/180)*that.earth.radius*rFactor;
+        //         // vert.z = Math.cos(lon*Math.PI/180)*Math.cos(lat*Math.PI/180)*that.earth.radius*rFactor;
+        //         // vert.y = Math.sin(lat*Math.PI/180)*that.earth.radius*rFactor;
+        //     }
+        // });
         //
         // let csgRot = new ThreeBSP(meshRot);
         // let csgBlau = new ThreeBSP(meshBlau);
         // console.log("csgRot: %o", csgRot);
         // console.log("csgBlau: %o", csgBlau);
         //
-        // let csgProcessed = csgBlau.intersect(csgRot);
+        // let csgProcessed = csgRot.intersect(csgBlau);
         // // let csgProcessed = csgBlau.subtract(csgRot);
         // console.log("csgProcessed: %o", csgProcessed);
-        // let meshProcessed = csgProcessed.toMesh(new THREE.MeshLambertMaterial({color: 0x009900}));
+        // let meshProcessed = csgProcessed.toMesh(gruen);
         // console.log("meshProcessed: %o", meshProcessed);
         // meshProcessed.geometry.computeVertexNormals();
-        // meshProcessed.rotation.set(Math.PI/8, Math.PI/8, 0);
+        // // meshProcessed.rotation.set(Math.PI/8, Math.PI/8, 0);
         // // this.earthScene.add(meshRot);
         // // this.earthScene.add(meshBlau);
         // this.earthScene.add(meshProcessed);
+
+
 
         this.earthRenderLoop();
     }

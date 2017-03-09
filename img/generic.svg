@@ -24,7 +24,7 @@ Example for painting countries:
 </g>
 
 <g class="country TST">
-<path d="M20 15L40 15 40 -5 20 -5Z"/>
+<path d="M20 60L40 60 40 -50 20 -50Z"/>
 </g>
 
 <g class="country TST">

@@ -13,13 +13,16 @@ var Earth = function () {
         this.radius = radius;
         this.countrys = [];
         this.scene = scene;
+        this.csgMesh = null;
         this.oceanMesh = null;
         this.pos = new THREE.Vector3(0, 0, 0);
 
+        this.csgMesh = new THREE.Mesh(new THREE.SphereGeometry(this.radius, 50, 50));
         // let geometry = new THREE.SphereGeometry(this.radius*0.999, 32, 32);
         var geometry = new THREE.SphereGeometry(this.radius * 0.999, 50, 50);
         var material = new THREE.MeshLambertMaterial({
-            color: 0x2E6AEE
+            color: 0x2E6AEE,
+            wireframe: true
         });
         this.oceanMesh = new THREE.Mesh(geometry, material);
         this.oceanMesh.position.set(this.pos.x, this.pos.y, this.pos.z);
@@ -58,7 +61,10 @@ var Earth = function () {
         key: "transform",
         value: function transform() {
             var that = this;
+            var i = 1;
             this.countrys.forEach(function (country) {
+                console.log("transform country #" + i + " (" + country.code + ")");
+                i++;
                 country.transform();
             });
         }
